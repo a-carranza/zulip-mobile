@@ -25,7 +25,7 @@ jetify() {
     node_modules/.bin/jetify
 }
 
-pod_install
+#pod_install
 
 jetify
 

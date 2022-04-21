@@ -31,6 +31,7 @@ type Props = $ReadOnly<{|
   route: RouteProp<'settings', void>,
 |}>;
 
+
 export default function SettingsScreen(props: Props): Node {
   const theme = useGlobalSelector(state => getGlobalSettings(state).theme);
   const browser = useGlobalSelector(state => getGlobalSettings(state).browser);
@@ -88,6 +89,19 @@ export default function SettingsScreen(props: Props): Node {
           NavigationService.dispatch(navigateToLegal());
         }}
       />
+
+      <NestedNavRow
+        Icon={IconResetToDefault}
+        label ="Default"
+        onPress={() => {
+            //NavigationService.dispatch(navigateToReset()); // Create ResetScreen.js
+        }}
+        //
+
+      />
+      // hear we define a default button replicated off of the logout button
+
+
     </Screen>
   );
 }

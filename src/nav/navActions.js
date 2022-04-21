@@ -135,3 +135,5 @@ export const navigateToSharing = (sharedData: SharedData): GenericNavigationActi
   StackActions.push('sharing', { sharedData });
 
 export const navigateToSettings = (): GenericNavigationAction => StackActions.push('settings');
+
+//export const navigateToReset = (): GenericNavigationAction => StackActions.push('reset');
