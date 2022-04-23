@@ -77,10 +77,7 @@ function LogoutButton(props: {||}) {
   const _ = useContext(TranslationContext);
   const identity = useSelector(getIdentity);
   return (
-    <ZulipButton
-      style={styles.button}
-      secondary
-      text="Log out"
+    <ZulipButton style={styles.button} secondary text="Log out"
       onPress={() => {
         Alert.alert(
           _('Log out?'),
@@ -110,37 +107,6 @@ type Props = $ReadOnly<{|
   navigation: MainTabsNavigationProp<'profile'>,
   route: RouteProp<'profile', void>,
 |}>;
-/* define default setting function
-function ResetToDefaultButton(props: {||}) {
-    constant _ = useContext(TranslationContext);
-    return (
-    <ZulipButton //gives the
-       style={styles.button}
-       secondary
-       text="Default"
-       onPress{() => {
-        Alert.alert(
-          _('Reset To Default Settings?'),
-          _('Your settings will automatically be changed to default. No more nightmode for you.', {
-          }),
-          [
-            { text: _(), style: 'cancel' },
-            {
-              text: _('Reset'),
-              style: 'destructive',
-              onPress: () => {
-                //must perform some action like reset values to default.
-              },
-            },
-
-          ],
-          { cancelable: true }.
-        );
-       }}
-   />
-   );
-}
-*/
 
 /**
  * This is similar to `AccountDetails` but used to show the current users account.
@@ -165,9 +131,6 @@ export default function ProfileScreen(props: Props): Node {
         <SwitchAccountButton />
         <LogoutButton />
       </View>
-      //<View style={styles.buttonRow}>
-        //<ResetToDefaultButton />
-       //</View>
     </ScrollView>
   );
 }

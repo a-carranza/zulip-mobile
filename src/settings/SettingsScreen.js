@@ -16,6 +16,7 @@ import {
   IconNotifications,
   IconLanguage,
   IconMoreHorizontal,
+  IconReset,
 } from '../common/Icons';
 import {
   setGlobalSettings,
@@ -23,6 +24,7 @@ import {
   navigateToLanguage,
   navigateToDiagnostics,
   navigateToLegal,
+  navigateToReset,
 } from '../actions';
 import { shouldUseInAppBrowser } from '../utils/openLink';
 
@@ -91,17 +93,12 @@ export default function SettingsScreen(props: Props): Node {
       />
 
       <NestedNavRow
-        Icon={IconResetToDefault}
-        label ="Default"
-        onPress={() => {
-            //NavigationService.dispatch(navigateToReset()); // Create ResetScreen.js
-        }}
-        //
-
-      />
-      // hear we define a default button replicated off of the logout button
-
-
+              Icon={IconReset}
+              label="Default Settings" //needs translation in messages.json package
+              onPress={() => {
+                NavigationService.dispatch(navigateToReset());
+              }}
+            />
     </Screen>
   );
 }

@@ -42,6 +42,7 @@ import TopicListScreen from '../topics/TopicListScreen';
 import EmojiPickerScreen from '../emoji/EmojiPickerScreen';
 import LegalScreen from '../settings/LegalScreen';
 import SettingsScreen from '../settings/SettingsScreen';
+import ResetScreen from '../settings/ResetScreen'; //import new screen
 import UserStatusScreen from '../user-statuses/UserStatusScreen';
 import SharingScreen from '../sharing/SharingScreen';
 import { useHaveServerDataGate } from '../withHaveServerDataGate';
@@ -78,6 +79,8 @@ export type AppNavigatorParamList = {|
   'user-status': RouteParamsOf<typeof UserStatusScreen>,
   sharing: RouteParamsOf<typeof SharingScreen>,
   settings: RouteParamsOf<typeof SettingsScreen>,
+  reset: RouteParamsOf<typeof ResetScreen>, // add new navigation
+
 |};
 
 export type AppNavigationProp<
@@ -149,6 +152,7 @@ export default function AppNavigator(props: Props): Node {
       <Stack.Screen name="legal" component={useHaveServerDataGate(LegalScreen)} />
       <Stack.Screen name="user-status" component={useHaveServerDataGate(UserStatusScreen)} />
       <Stack.Screen name="settings" component={useHaveServerDataGate(SettingsScreen)} />
+      <Stack.Screen name='reset' component={useHaveServerDataGate(ResetScreen)} />
 
       {/* These screens do not expect server data in order to function
           normally. */}

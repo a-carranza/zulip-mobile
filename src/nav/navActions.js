@@ -136,4 +136,8 @@ export const navigateToSharing = (sharedData: SharedData): GenericNavigationActi
 
 export const navigateToSettings = (): GenericNavigationAction => StackActions.push('settings');
 
-//export const navigateToReset = (): GenericNavigationAction => StackActions.push('reset');
+export const navigateToReset = (): GenericNavigationAction => StackActions.push('reset');
+//takes use to ResetScreen.js where ResetScreen.js has navigation and route by 'reset'
+
+//create new navigation to takes use to ProfileScreen.js
+export const navigateToProfile = (): GenericNavigationAction => StackActions.push('profile');

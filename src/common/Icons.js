@@ -99,3 +99,4 @@ export const IconAttach: SpecificIconType = makeIcon(Feather, 'paperclip');
 export const IconAttachment: SpecificIconType = makeIcon(IoniconsIcon, 'document-attach-outline');
 export const IconGroup: SpecificIconType = makeIcon(FontAwesome, 'group');
 export const IconWebPublic: SpecificIconType = props => <ZulipIcon name="globe" {...props} />;
+export const IconReset : SpecificIconType = makeIcon(Feather, 'alert-circle');
