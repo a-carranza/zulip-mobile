@@ -9,25 +9,32 @@ import type { AppNavigationProp } from '../nav/AppNavigator';
 import NestedNavRow from '../common/NestedNavRow';
 import SwitchRow from '../common/SwitchRow';
 import Screen from '../common/Screen';
+import { getAuth, getSettings, getGlobalSettings, getOwnUserId } from '../selectors';
+
 
 import { TranslationContext } from '../boot/TranslationProvider';
 import type { MainTabsNavigationProp } from '../main/MainTabsScreen';
 import * as NavigationService from '../nav/NavigationService';
 import { createStyleSheet } from '../styles';
-import { useDispatch, useSelector } from '../react-redux';
+import { useDispatch, useSelector, useGlobalSelector } from '../react-redux';
 import ZulipButton from '../common/ZulipButton';
 import {
   logout,
   navigateToAccountPicker,
   navigateToUserStatus,
   navigateToSettings,
+  navigateToProfile,
+  setGlobalSettings,
 } from '../actions';
 import { tryStopNotifications } from '../notification/notifTokens';
 //import AccountDetails from '../account/AccountDetails';
 //import AwayStatusSwitch from '../account/AwayStatusSwitch';
 import { getOwnUser } from '../users/userSelectors';
 import { getIdentity } from '../account/accountsSelectors';
+import { getUserStatus } from '../user-statuses/userStatusesModel';
 
+//import { handleStreamNotificationChange, handleOnlineNotificationChange, handleOfflineNotificationChange } from '../settings/NotificationsScreen'
+import * as api from '../api';
 
 
 type Props = $ReadOnly<{|
@@ -38,11 +45,43 @@ type Props = $ReadOnly<{|
 
 
 export default function ResetScreen(props: Props): Node {
+    const theme = useGlobalSelector(state => getGlobalSettings(state).theme);
     const _ = useContext(TranslationContext);
     const dispatch = useDispatch();
-    const themeToDefault = useCallback(() => {
-        dispatch(setGlobalSettings({ theme: 'default'}));
-    }, [theme, dispatch])
+    //const ownUserId = useSelector(getOwnUserId);
+    //const awayStatus = useSelector(state => getUserStatus(state, ownUserId).away);
+
+    const auth = useSelector(getAuth);
+    const offlineNotification = useSelector(state => getSettings(state).offlineNotification);
+    const onlineNotification = useSelector(state => getSettings(state).onlineNotification);
+    const streamNotification = useSelector(state => getSettings(state).streamNotification);
+
+      const OfflineToDefault = useCallback(() => {
+          api.toggleMobilePushSettings({
+            auth,
+            opp: 'offline_notification_change',
+            value: false,
+          });
+        }, [offlineNotification, auth]);
+
+        const OnlineToDefault = useCallback(() => {
+          api.toggleMobilePushSettings({
+            auth,
+            opp: 'online_notification_change',
+            value: false,
+          });
+        }, [onlineNotification, auth]);
+
+        const StreamToDefault = useCallback(() => {
+          api.toggleMobilePushSettings({
+            auth,
+            opp: 'stream_notification_change',
+            value: false,
+          });
+        }, [streamNotification, auth]);
+
+
+
     return (
      <Screen title ="Reset">
         <NestedNavRow label="Reset to Default Settings"
@@ -56,7 +95,11 @@ export default function ResetScreen(props: Props): Node {
               text: _('Reset'),
               style: 'destructive',
               onPress: () => {
-                themeToDefault;
+                dispatch(setGlobalSettings({theme: 'default'}));
+                dispatch(StreamToDefault);
+                dispatch(OnlineToDefault);
+                dispatch(OfflineToDefault);
+                //api.updateUserStatus(auth, { awayStatus: false });
                 NavigationService.dispatch(navigateToProfile());
               },
             },
